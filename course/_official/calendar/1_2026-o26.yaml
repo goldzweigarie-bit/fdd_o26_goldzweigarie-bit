@@ -60,11 +60,69 @@ events:
     title: "Expresiones regulares"
     page: expresiones-regulares
 
-  - id: descanso-obligatorio-septiembre
+  - id: session-08
+    kind: session
+    date: "2026-09-03"
+    start_time: "19:00"
+    end_time: "20:30"
+    title: "Git: qué guarda y cómo se deshace"
+    page: seccion-git
+
+  - id: session-09
+    kind: session
+    date: "2026-09-08"
+    start_time: "19:00"
+    end_time: "20:30"
+    title: "GitHub: el flujo del curso, y examen de terminal y regex"
+    page: seccion-github
+
+  - id: asueto-septiembre
     kind: cancellation
+    date: "2026-09-15"
+    title: "Asueto — no hay clase"
+    summary: "El martes 15 de septiembre no hay sesión de Fuentes de Datos."
+
+  - id: descanso-obligatorio-septiembre
+    kind: milestone
+    date: "2026-09-16"
+    title: "Descanso obligatorio del ITAM"
+    summary: "Miércoles 16 de septiembre. No cae sesión de esta materia, que va martes y jueves."
+
+  - id: session-10
+    kind: session
     date: "2026-09-17"
+    start_time: "19:00"
+    end_time: "20:00"
+    title: "Contenedores: qué son en realidad, sin tocar el teclado"
+    page: la-idea-del-contenedor
+
+  - id: session-11
+    kind: session
+    date: "2026-09-22"
+    start_time: "19:00"
+    end_time: "20:30"
+    title: "Contenedores: imagen, contenedor y volúmenes, con las manos"
+    page: contenedores-con-las-manos
+
+  - id: session-12
+    kind: session
+    date: "2026-09-24"
+    start_time: "19:00"
+    end_time: "20:30"
+    title: "Contenedores: diseño, servicios y dónde se rompe el aislamiento"
+    page: disenar-con-contenedores
+
+  - id: asueto-noviembre
+    kind: cancellation
+    date: "2026-11-03"
+    title: "Asueto — no hay clase"
+    summary: "El martes 3 de noviembre no hay sesión de Fuentes de Datos."
+
+  - id: descanso-obligatorio-noviembre
+    kind: cancellation
+    date: "2026-11-17"
     title: "Descanso obligatorio — no hay clase"
-    summary: "El jueves 17 de septiembre no hay sesión de Fuentes de Datos."
+    summary: "El martes 17 de noviembre no hay sesión de Fuentes de Datos."
 
   - id: inicio-de-cursos
     kind: milestone

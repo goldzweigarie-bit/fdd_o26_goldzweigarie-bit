@@ -64,8 +64,7 @@ Cómo se vuelve reproducible y colaborable lo que haces.
 |:-:|---|---|
 | 7 | Git | Control de versiones, commits, ramas, merges |
 | 8 | GitHub | Colaboración, pull requests, revisión de código, CI/CD |
-| 9 | Docker I | Contenedores, imágenes, Dockerfile |
-| 10 | Docker II | Docker Compose, redes, volúmenes, orquestación básica |
+| 9–10 | Contenedores | Tres sesiones: qué es un contenedor de verdad, imágenes y `Dockerfile`, volúmenes y redes, y cómo se reparte un sistema en servicios sin romper el aislamiento |
 
 ### Fase 3 — Python profesional
 
@@ -142,9 +141,14 @@ Es **el primer pipeline de datos del curso y lo tienes enfrente**: fuente en tex
 
 ### Cómo se entregan las tareas
 
-Las tareas se entregan **en Canvas**. El repositorio y este sitio son de dónde sacas el material; Canvas es a dónde subes la evidencia de que hiciste el trabajo.
+Las primeras tareas del curso se entregaron **en Canvas**, porque todavía no
+habíamos visto Git.
 
 **Entrega de esta semana:** https://itam.instructure.com/courses/17979/assignments/225402
+
+A partir de la unidad 7, el 8 de septiembre, todo se entrega **por pull request a
+este repositorio**. El flujo está en [[el-ritual-del-curso|El ritual]] y se
+practica ahí mismo.
 
 ## Las primeras tres tareas
 

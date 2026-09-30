@@ -1,0 +1,69 @@
+id: datacamp-docker-intermedio-1
+type: assignment
+authority: official
+content:
+  title: "DataCamp: Intermediate Docker, capítulos 1 y 2"
+  instructions: >-
+    Haz los capítulos 1 y 2 del curso Intermediate Docker de DataCamp y sube la
+    evidencia por el flujo del curso. El enlace está abajo, en los recursos. Son
+    dos cursos de Docker en todo el mes, no tres: éste es el segundo, y se
+    entrega en dos partes porque sus cuatro capítulos no caben en una semana. En
+    esta entrega van los dos primeros.
+    El capítulo 1 es volúmenes, montar el filesystem del host y sacar archivos de
+    un contenedor con docker cp. El capítulo 2 es puertos, EXPOSE y redes. Los
+    dos los vas a necesitar tecleados el jueves 24: esa clase habla de cómo se
+    reparte un sistema en servicios que se hablan entre sí, y da por sabido lo
+    que estos dos capítulos entrenan. Por eso vence el jueves y no el domingo.
+    La entrega va en la carpeta llamada docker, dentro de tu carpeta de
+    estudiante, la misma de la entrega anterior, no la de github. No la vuelves a
+    copiar: ya está ahí desde el martes, y lo que haces es llenarle la segunda
+    sección al archivo.
+    Deben quedar dos cosas. Una, certificaciones punto md con la sección de
+    Intermediate Docker capítulos 1 y 2 llena, con la fecha. Dos, la captura,
+    llamada intermedio guion 1 guion 2 punto png, con ese nombre exacto porque la
+    plantilla ya la enlaza.
+    Aquí hay algo que cambia respecto a la entrega pasada, y conviene que lo leas
+    con calma: medio curso no da certificado ni pantalla de cien por ciento, así
+    que no hay Statement of Accomplishment que pegar y no lo busques. La
+    evidencia que vale, y la defino para que nadie entregue de menos, es la
+    página del curso donde se vean sus cuatro capítulos, los dos primeros
+    marcados como completados, y tu nombre visible. Una captura de un ejercicio
+    suelto no sirve; una del curso sin tu nombre, tampoco.
+    La entrega es un pull request desde su propia branch, que se llama tarea
+    guion cero ocho guion datacamp guion inter guion 1, con ese nombre exacto, en
+    minúsculas y sin acentos, porque la revisión automática lo comprueba. La
+    branch nace de main, actualizado contra el repositorio del curso, y no de la
+    branch de la entrega anterior. Una branch por tarea, sin excepciones. Y este
+    pull request toca una sola subcarpeta tuya, la de docker, y nada más.
+    Sabrás que terminaste cuando el pull request esté abierto y su revisión esté
+    en verde. Si sale roja, lee el mensaje, corrige y haz push a la misma branch.
+    El verde significa que no rompiste las reglas del repositorio, es decir que
+    todo lo que tocaste vive en tu carpeta, que la branch se llama como debe y
+    que no subiste basura; también comprueba que estén los archivos de la tarea,
+    que no sigan como la plantilla y las reglas propias de esta entrega. No
+    comprueba si lo que dicen es cierto, ni el resto de la regla del espejo. Eso
+    lo reviso yo, y la aprobación es la etiqueta entrega aceptada.
+    Los cursos se hacen, no se simulan. Si no alcanzaste a terminar los dos
+    capítulos, sube lo que sí completaste y dilo en el archivo. Reportar el
+    pendiente cuenta como entrega; presumir un avance que no ocurrió, no.
+  resources:
+    - title: "Unidad — Las cinco entregas"
+      url: "https://rayalucaria.org/fdd_o26/contenedores/d-entregas/"
+      note: "El tablero de la unidad. Esta es la entrega 4: branch tarea-08-datacamp-inter-1, carpeta docker/, que esta vez ya no se copia."
+    - title: "DataCamp — Intermediate Docker"
+      url: "https://app.datacamp.com/learn/courses/intermediate-docker"
+      note: "El curso de esta entrega y de la siguiente. Aquí van los capítulos 1 y 2."
+    - title: "Unidad — El ritual"
+      url: "https://rayalucaria.org/fdd_o26/git-y-github/github/el-ritual/"
+      note: "Los tres bloques del flujo, con sus comandos exactos."
+    - title: "Unidad — El flujo del curso"
+      url: "https://rayalucaria.org/fdd_o26/git-y-github/github/el-flujo-del-curso/"
+      note: "La regla del mirror y qué revisa, y qué no revisa, el check verde."
+    - title: "Unidad — Cheatsheet de Git"
+      url: "https://rayalucaria.org/fdd_o26/git-y-github/cheatsheet/"
+      note: "Los comandos y la tabla de errores frecuentes con qué hacer."
+  available: "2026-09-22"
+  due: "2026-09-24"
+  points: 10
+  status: published
+  tags: [docker, datacamp, volumen, red, evidencia, entrega]

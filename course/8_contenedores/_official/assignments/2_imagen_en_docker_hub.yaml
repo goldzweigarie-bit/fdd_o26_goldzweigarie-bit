@@ -1,0 +1,98 @@
+id: imagen-en-docker-hub
+type: assignment
+authority: official
+content:
+  title: "Tu imagen en Docker Hub"
+  instructions: >-
+    Construye una imagen propia, publícala en Docker Hub y deja escrito cómo se
+    corre, de modo que yo pueda bajarla a mi máquina y verla funcionar sin
+    preguntarte nada. Ése es el punto de la entrega: no es que la imagen exista
+    en tu computadora, es que exista para alguien más. Una imagen que sólo corre
+    en tu laptop es exactamente el problema que esta unidad vino a resolver.
+    El material de partida está en la carpeta que publiqué en codigo, con nombre
+    cero ocho guion bajo contenedores. Se copia desde la terminal, con la barra y
+    el punto al final del origen, a tu carpeta de estudiante. Fíjate en el cero
+    de adelante: la carpeta se llama cero ocho guion bajo contenedores aunque la
+    unidad se vea como ocho en el sitio, y si le quitas el cero la revisión te
+    rechaza el pull request por no respetar el espejo.
+    Deben quedar cuatro archivos tuyos. Uno, info punto sh, dentro de la
+    subcarpeta info, modificado: lleva tres líneas de código que hagan algo, no
+    tres líneas de comentario. Una imprime tu login de GitHub, otra imprime la
+    fecha en que se construyó la imagen, y la tercera es tuya, la que se te
+    ocurra. De paso bórrale el echo de depuración que viene en el original, y no
+    subas output punto txt, que no viaja. Dos, el Dockerfile de la subcarpeta
+    roto, arreglado: trae tres defectos puestos a propósito y los tres se notan
+    en algo medible, así que arréglalos en tu copia y no en la mía. Tres,
+    bitacora punto md, con la salida de docker version, de docker images y del
+    docker history de tu imagen, más los tres defectos explicados uno por línea y
+    la cosa que se te rompió. Y cuatro, mi guion imagen punto md, que es el
+    contrato de la entrega.
+    Mi guion imagen punto md lleva, y esto es lo que hace verificable la entrega:
+    la URL pública de tu imagen, que es la que empieza con hub punto docker punto
+    com diagonal r diagonal tu usuario diagonal tu imagen. La que te da el
+    navegador con tu sesión abierta empieza con hub punto docker punto com
+    diagonal repository, y ésa da error cuatrocientos cuatro a todos los demás,
+    incluido yo. Ábrela en una ventana privada antes de entregar. Lleva también
+    tus dos nombres de usuario, el de GitHub y el de Docker Hub, que no tienen
+    por qué ser el mismo; el digest de la imagen; el comando exacto que debo
+    correr; la salida que debo esperar; y la prueba de que se baja del registro,
+    que es la salida completa de docker logout, luego docker rmi con la bandera
+    f, y luego docker run, con sus líneas que dicen Unable to find image locally
+    y Pulling from. Sin esas dos líneas no hay prueba de que la imagen esté
+    publicada.
+    Tres cosas que se rompen siempre. La imagen pesa menos de trescientos
+    megabytes, y eso se logra eligiendo bien la imagen base, no borrando cosas al
+    final. Si tu laptop es Apple Silicon, construye con docker buildx build y la
+    bandera platform en linux diagonal amd sesenta y cuatro, porque si no publicas
+    una imagen que sólo corre en máquinas como la tuya. Y no pegues nunca la
+    salida de docker login: cada semestre alguien sube su token ahí dentro. La
+    imagen tampoco se sube como archivo al repositorio; lo que se entrega es la
+    URL.
+    Del resto de la carpeta, predicciones punto md no se entrega: es tuyo, para
+    trabajar en clase. Y si corriste los app punto py en local te va a aparecer
+    una carpeta con nombre guion bajo guion bajo pycache guion bajo guion bajo;
+    la revisión la rechaza y hace bien, bórrala antes de hacer commit. Si en algún
+    momento levantas Postgres, la contraseña va en la línea de comandos que
+    escribes en tu terminal, nunca en un archivo punto env dentro del
+    repositorio, porque ese archivo sí se sube y ya no se puede desubir.
+    La entrega es un pull request desde su propia branch, que se llama tarea
+    guion cero ocho guion imagen, con ese nombre exacto, en minúsculas y sin
+    acentos, porque la revisión automática lo comprueba. La branch nace de main,
+    actualizado contra el repositorio del curso. Vence el mismo día que la
+    entrega de DataCamp y son dos entregas distintas: dos branches y dos pull
+    requests, las dos nacidas de main y ninguna de la otra. Una branch por tarea,
+    sin excepciones. Este pull request toca una sola subcarpeta tuya, la de cero
+    ocho guion bajo contenedores, y nada más; la de docker es de las otras tres
+    entregas.
+    Sabrás que terminaste cuando el pull request esté abierto y su revisión esté
+    en verde. Si sale roja, lee el mensaje, corrige y haz push a la misma branch;
+    el pull request se actualiza solo. Y ojo con lo que significa el verde: la
+    revisión comprueba que no rompiste las reglas del repositorio, es decir que
+    todo lo que tocaste vive en tu carpeta, que la branch se llama como debe y
+    que no subiste basura. No comprueba que existan los cuatro archivos, ni qué
+    dicen, ni que tu imagen se baje de verdad. Eso lo corro yo, con el comando
+    que tú me escribiste.
+  resources:
+    - title: "Unidad — Las cinco entregas"
+      url: "https://rayalucaria.org/fdd_o26/contenedores/d-entregas/"
+      note: "El tablero de la unidad. Esta es la entrega 3: branch tarea-08-imagen, carpeta 08_contenedores/, con los cuatro archivos y el ritual."
+    - title: "Unidad — El ritual"
+      url: "https://rayalucaria.org/fdd_o26/git-y-github/github/el-ritual/"
+      note: "Los tres bloques del flujo, con sus comandos exactos."
+    - title: "Unidad — El flujo del curso"
+      url: "https://rayalucaria.org/fdd_o26/git-y-github/github/el-flujo-del-curso/"
+      note: "La regla del mirror y qué revisa, y qué no revisa, el check verde."
+    - title: "Docker Hub"
+      url: "https://hub.docker.com/"
+      note: "Donde se publica. La cuenta es gratuita y el repositorio va público."
+    - title: "Docker — docker push y los registros"
+      url: "https://docs.docker.com/reference/cli/docker/image/push/"
+      note: "El comando y por qué la etiqueta tiene que llevar tu usuario."
+    - title: "Docker — construir para varias plataformas"
+      url: "https://docs.docker.com/build/building/multi-platform/"
+      note: "El paso obligado si tu laptop es Apple Silicon."
+  available: "2026-09-17"
+  due: "2026-09-22"
+  points: 10
+  status: published
+  tags: [docker, imagen, dockerfile, registro, entrega]

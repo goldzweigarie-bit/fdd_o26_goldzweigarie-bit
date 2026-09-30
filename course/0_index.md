@@ -19,6 +19,8 @@ el temario, cómo se califica y las dos primeras tareas.
 
 Las sesiones son los **martes y jueves, de 19:00 a 20:30**.
 
+Hay una sola excepción en todo el semestre: el **jueves 17 de septiembre** la sesión dura una hora, de **19:00 a 20:00**. Es la clase que abre la unidad de contenedores, se da sin computadora y no necesita más.
+
 ## El repositorio del curso
 
 Todo el curso vive en un repositorio público de GitHub:
@@ -31,20 +33,23 @@ lees aquí y lo que está en el repositorio son la misma cosa vista de dos maner
 Ahí están las notas de cada sesión, el material de apoyo, el calendario y la
 definición de cada tarea.
 
-**Las tareas se entregan en Canvas**, no aquí. El repositorio es de dónde sacas el
-material; Canvas es a dónde subes la evidencia:
-https://itam.instructure.com/courses/17979/assignments/225402
+**Desde la unidad 7 las tareas se entregan por pull request a este repositorio**,
+con el flujo de [[el-ritual-del-curso|El ritual]]. Antes del 8 de septiembre de
+2026 se entregaban en Canvas; esas entregas siguen ahí y no se mueven.
 
 ## Fechas académicas que afectan al curso
 
 - **10 de agosto**: inicio de cursos.
-- **17 de septiembre** (jueves): descanso obligatorio del ITAM; no hay clase.
+- **15 de septiembre** (martes): asueto; no hay clase.
+- **3 de noviembre** (martes): asueto; no hay clase.
+- **17 de noviembre** (martes): descanso obligatorio del ITAM; no hay clase.
 - **2 de diciembre**: fin de cursos.
 - **Del 7 al 19 de diciembre**: período de exámenes finales.
 
-Los asuetos del 16 de septiembre, 2 de noviembre y 16 de noviembre caen en días
-en los que esta materia no sesiona, así que no nos quitan clase. La única sesión
-que se pierde en todo el semestre es la del jueves 17 de septiembre.
+Los tres días que nos quitan clase caen en martes. El descanso obligatorio del
+**16 de septiembre** es miércoles, así que a esta materia no le toca. En total
+se pierden tres sesiones en el semestre, todas de martes; los jueves salen
+completos.
 
 ## Contacto
 

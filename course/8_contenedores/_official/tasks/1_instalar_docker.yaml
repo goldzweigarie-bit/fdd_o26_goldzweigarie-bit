@@ -1,0 +1,81 @@
+id: setup-docker
+type: task
+authority: official
+content:
+  title: "Imprescindible: deja Docker y Podman corriendo antes del martes"
+  instructions: >-
+    Esto es lo más importante que tienes que hacer entre el jueves y el martes.
+    La sesión del martes 22 se teclea completa, y si los dos runtimes no están
+    corriendo en tu máquina, esa clase se te va a ir viendo la pantalla de
+    alguien más. No lo dejes para la noche del lunes: lo que se atora aquí casi
+    siempre se resuelve en veinte minutos, y esos veinte minutos existen sólo si
+    empiezas con tiempo.
+    No hay nada que subir ni que entregar. Es hacerlo y que te quede
+    funcionando. No lleva puntos, y aun así es la tarea de la que dependen las
+    otras cuatro.
+    Son dos programas, no uno. Docker es el que usa todo el mundo y el que da
+    por hecho DataCamp. Podman hace lo mismo sin un proceso con privilegios
+    corriendo todo el tiempo, y vas a querer haberlo instalado el día que veas
+    la diferencia en clase. Instala los dos, en el orden que quieras, siguiendo
+    la página 10 de la segunda sección de la unidad, que trae las
+    instrucciones de Linux, de macOS y de Windows con WSL2; si algo falla, la
+    página siguiente es la de planes B y tiene los síntomas más comunes con su
+    causa.
+    Sabrás que terminaste cuando estos dos comandos te respondan bien, los corras
+    tú, en tu máquina, y sin escribir sudo en ninguno de los dos: docker run
+    hello-world y podman run hello-world. Los dos deben imprimir el saludo que
+    dice que tu instalación parece estar funcionando correctamente. Si uno de los
+    dos pide sudo o responde permiso denegado, todavía no terminaste.
+    Ojo con una comprobación que circula por internet y que aquí no sirve. La de
+    listar tus grupos y buscar docker entre ellos sólo dice algo en Linux con el
+    daemon del sistema: en macOS, en Windows y en cualquier instalación rootless
+    no existe ese grupo ni debe existir, así que su ausencia no prueba nada. La
+    comprobación que vale en las tres plataformas es correr, en este orden,
+    whoami, id -u, type -a docker, docker context ls, docker version y docker run
+    con la bandera rm sobre hello-world, y mirar la salida completa. Ahí se caen
+    las ocho maneras de creer que corres sin sudo sin correr sin sudo: el alias,
+    la función de shell, ser root dentro de WSL2, el sudo -i que se te olvidó
+    cerrar, el newgrp que sólo valía en esa ventana, el chmod al socket, un
+    DOCKER_HOST apuntando a otra máquina, y usar Podman creyendo que es Docker.
+    Guarda esa salida en un archivo de texto en tu máquina. No se entrega, pero
+    si algo no sale, es exactamente lo que necesito ver para decirte qué pasó en
+    dos minutos en vez de en media hora.
+    Baja antes de clase las imágenes que vamos a usar, con docker pull, para no
+    depender de la red del salón. Son seis: ubuntu en su versión 24.04, alpine en
+    su versión 3.20, hello world, python en su versión 3.12 con la variante slim,
+    y postgres en dos versiones, la 16 y la 17, porque un ejercicio de la sesión
+    usa las dos justamente para enseñar qué pasa cuando no coinciden. Son unos
+    cuantos cientos de megabytes y se bajan una sola vez.
+    Hazlo con la sesión iniciada, corriendo docker login antes de los pull. No es
+    un capricho: en el salón somos treinta detrás de una sola dirección IP, y el
+    límite de descargas anónimas de Docker Hub se agota a los pocos minutos y
+    detiene la clase para todo el grupo. Las descargas autenticadas cuentan
+    contra tu cuenta, no contra la dirección del salón.
+    Y la parte que de verdad importa: si algo se atoró, dilo antes, no el martes
+    en la noche. Escribe qué sistema operativo tienes, qué comando corriste, qué
+    esperabas y qué salió. Una instalación atorada que se reporta el viernes se
+    arregla; la misma atorada que aparece el lunes a medianoche te cuesta la
+    clase y las dos entregas que vencen esa mañana.
+  resources:
+    - title: "Unidad — Las cinco entregas"
+      url: "https://rayalucaria.org/fdd_o26/contenedores/d-entregas/"
+      note: "El tablero de la unidad. Esta instalación es la entrega 1, la que no lleva puntos y de la que dependen las otras cuatro."
+    - title: "Docker — instalar Docker Engine"
+      url: "https://docs.docker.com/engine/install/"
+      note: "Linux, por distribución. Es el camino de Ubuntu y de WSL2."
+    - title: "Docker — pasos posteriores a la instalación en Linux"
+      url: "https://docs.docker.com/engine/install/linux-postinstall/"
+      note: "El paso que deja a docker corriendo sin sudo. No aplica en macOS."
+    - title: "Docker Desktop"
+      url: "https://docs.docker.com/desktop/"
+      note: "El camino de macOS y el de Windows sin WSL2."
+    - title: "Podman — instalación"
+      url: "https://podman.io/docs/installation"
+      note: "Las tres plataformas. En macOS y Windows hace falta podman machine."
+    - title: "Unidad — El flujo del curso"
+      url: "https://rayalucaria.org/fdd_o26/git-y-github/github/el-flujo-del-curso/"
+      note: "Para las cuatro entregas que vienen después de esta instalación."
+  available: "2026-09-17"
+  due: "2026-09-22"
+  status: published
+  tags: [docker, podman, instalacion, setup, imprescindible]

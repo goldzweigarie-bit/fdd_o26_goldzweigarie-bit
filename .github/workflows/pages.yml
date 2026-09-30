@@ -9,8 +9,10 @@ permissions:
   pages: write
   id-token: write
 
+# El grupo lleva la referencia: con un grupo constante, abrir un pull request
+# cancelaba el despliegue de main que estuviera en vuelo.
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -29,6 +31,10 @@ jobs:
   # `needs: checks` es lo que convierte las pruebas en una compuerta real. Sin
   # esa línea ambos trabajos corren en paralelo y el sitio se publica aunque la
   # suite falle.
+  # Corre tambien en los pull requests de forks: el trabajo util ahi es
+  # `raya validate`, que atrapa un curso roto antes del merge. El despliegue no
+  # es problema, porque el workflow reusable ya lo filtra por su cuenta a un
+  # push sobre la rama default.
   course-pages:
     needs: checks
     uses: raya-lucaria/raya-lucaria.github.io/.github/workflows/reusable-course-pages.yml@9f17ce94a3ab540f866caa141f7cf94033911f3d

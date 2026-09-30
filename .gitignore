@@ -226,3 +226,14 @@ __pycache__/
 # Workspace de superpowers/SDD — artefactos de ejecucion, no fuente
 .superpowers/
 .worktrees/
+
+# Basura de escritorio que la revision de entregas rechaza. Vivia solo en el
+# script; sin estas lineas, quien abre su carpeta en Finder o en el Explorador
+# stagea el archivo con `git add estudiantes/$U/...` y se lo rechazan.
+.DS_Store
+Thumbs.db
+desktop.ini
+node_modules/
+*.class
+*.o
+examenes/*

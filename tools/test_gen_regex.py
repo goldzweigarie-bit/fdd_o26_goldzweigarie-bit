@@ -1,8 +1,13 @@
 """Guardas del generador de diagramas de la unidad de Expresiones regulares.
 
-Regenera antes de comparar, igual que test_diagramas.py: correr pytest
-certifica que lo comiteado coincide con lo que el generador produce hoy, y no
-solo que el archivo existe. Editar un SVG a mano falla aqui.
+Compara lo comiteado contra lo que el generador produce hoy, sin escribir
+nada: editar un SVG a mano falla aqui.
+
+Antes esta guarda REGENERABA los SVG publicados en una fixture autouse
+antes de compararlos, asi que la comparacion era trivialmente cierta y una
+edicion a mano se borraba en silencio. Comprobado: editar un SVG y correr
+esta guarda pasaba en verde y revertia el archivo. Un arreglador no es una
+guarda.
 
 Las convenciones de la raiz <svg> no son cosmeticas: el sitio incrusta los
 diagramas con <img>, y sin width/height propios el navegador los pinta a
@@ -34,11 +39,6 @@ def _cargar():
     modulo = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(modulo)
     return modulo
-
-
-@pytest.fixture(scope="module", autouse=True)
-def _svgs_frescos():
-    subprocess.run([sys.executable, str(GENERADOR)], check=True)
 
 
 def test_el_catalogo_no_esta_vacio():

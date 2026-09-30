@@ -99,7 +99,7 @@ $$M_{pesos}=N_p\times\frac{b}{8}$$
 
 Se lee así: **memoria de los pesos = cantidad de parámetros × bytes por parámetro**.
 
-> [!IMPORTANT]
+> [!NOTE]
 > **Cuatro bytes describen el contenido numérico FP32, no el tamaño total de cualquier objeto que contenga ese número.** La fórmula calcula un mínimo lógico de los pesos. La representación usada por el lenguaje, el contenedor y el runtime puede añadir memoria.
 
 | Representación | Contenido numérico | Memoria adicional |

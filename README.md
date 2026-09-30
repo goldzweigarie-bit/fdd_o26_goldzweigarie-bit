@@ -6,8 +6,11 @@ Este repositorio es la fuente del sitio. No es una copia de respaldo: el sitio s
 construye a partir de estos archivos en cada push a `main`, así que lo que lees en
 la web y lo que está aquí son la misma cosa vista de dos maneras.
 
-Las tareas **se entregan en Canvas**, no aquí:
-https://itam.instructure.com/courses/17979/assignments/225402
+**Las tareas se entregan por pull request a este repositorio**, desde la unidad 7
+(8 de septiembre de 2026) en adelante. El flujo completo está en
+https://rayalucaria.org/fdd_o26/git-y-github/github/el-ritual/
+
+Las entregas anteriores a esa fecha fueron por Canvas.
 
 ## Datos del curso
 
@@ -17,8 +20,12 @@ https://itam.instructure.com/courses/17979/assignments/225402
 | Semestre | 11 de agosto – 1 de diciembre de 2026 (32 sesiones) |
 | Contacto | mario.vazquez.corte@itam.mx |
 
-El jueves 17 de septiembre no hay clase (descanso obligatorio del ITAM). El
-calendario completo, con el tema de cada sesión y las fechas de entrega, está en
+Hay una sola excepción al horario en todo el semestre: el **jueves 17 de
+septiembre** la sesión dura una hora, de **19:00 a 20:00**.
+
+Los tres días sin clase del semestre son el **martes 15 de septiembre**, el
+**martes 3 de noviembre** y el **martes 17 de noviembre** (descanso obligatorio
+del ITAM). El calendario completo, con el tema de cada sesión y las fechas de entrega, está en
 [el calendario del sitio](https://rayalucaria.org/fdd_o26/_raya/schedule/).
 
 ## Evaluación
