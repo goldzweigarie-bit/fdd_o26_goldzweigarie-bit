@@ -20,8 +20,8 @@ Las entregas anteriores a esa fecha fueron por Canvas.
 | Semestre | 11 de agosto – 1 de diciembre de 2026 (32 sesiones) |
 | Contacto | mario.vazquez.corte@itam.mx |
 
-Hay una sola excepción al horario en todo el semestre: el **jueves 17 de
-septiembre** la sesión dura una hora, de **19:00 a 20:00**.
+Hay dos excepciones al horario en todo el semestre: el **jueves 17 de
+septiembre** y el **jueves 1 de octubre**, las dos de **19:00 a 20:00**.
 
 Los tres días sin clase del semestre son el **martes 15 de septiembre**, el
 **martes 3 de noviembre** y el **martes 17 de noviembre** (descanso obligatorio

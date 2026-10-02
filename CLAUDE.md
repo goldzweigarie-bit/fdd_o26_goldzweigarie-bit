@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A **course source repository**, not an application. It holds authored Markdown/YAML for the ITAM course *Fuentes de Datos — Otoño 2026*, consumed by the Raya Lucaria framework (Glintstone static builder) to generate a static site published to GitHub Pages at **https://rayalucaria.org/fdd_o26/**.
 
-The published site comes from `raya.yaml`, `course/`, `skins/`, and `.github/workflows/pages.yml`. `tools/` holds image generators plus the pytest guards that protect them; it never renders.
+The published site comes from `raya.yaml`, `course/`, `skins/`, and `.github/workflows/pages.yml`. `tools/` holds image generators plus the pytest guards that protect them; it never renders. Other top-level directories don't render either. `codigo/` holds the per-task starter templates students copy. `estudiantes/<login>/` is where student pull requests land. `.github/tareas/` holds the task fichas, and `docs/superpowers/plans/` holds dated design plans for past unit rewrites, which are useful history when you change a unit.
 
 Course-facing content (page prose, titles, summaries, task instructions) is written in **Spanish**. Technical identifiers — `id`, `type`, `authority`, `scope`, filenames, tags, skin token names — stay in **English**.
 
@@ -68,28 +68,31 @@ A bare `![]()` renders without a "Figura N" caption. Numbered-object IDs (figure
 
 `course/_official/calendar/1_2026-o26.yaml` is a calendar document — a separate family from official learning objects, excluded from `data/official.json`.
 
-Sessions run **Tuesday and Thursday, 19:00–20:30**, from 2026-08-11 to 2026-12-01, with a single exception: `session-10` (Thu 2026-09-17) runs **19:00–20:00**, because the opening class of the containers unit is given without computers. `course/0_index.md` and `README.md` both state the schedule and that one exception; the three move together. `calesc2026.pdf` at the repo root is the ITAM academic calendar those dates come from.
+Sessions run **Tuesday and Thursday, 19:00–20:30**, from 2026-08-11 to 2026-12-01, with two exceptions, both **19:00–20:00**: `session-10` (Thu 2026-09-17), because the opening class of the containers unit is given without computers, and `session-13` (Thu 2026-10-01), the Python environments class. `course/0_index.md` and `README.md` both state the schedule and those two exceptions; the three move together. `calesc2026.pdf` at the repo root is the ITAM academic calendar those dates come from.
 
-**The session list is incremental on purpose.** The calendar used to carry all 32 sessions pre-titled through December; the plan drifted far enough from that outline that the future entries were removed. Only sessions whose content actually exists are listed — currently `session-01` through `session-12`, ending at 2026-09-24 — plus three `cancellation` entries (Tue 2026-09-15, Tue 2026-11-03, Tue 2026-11-17 — the only three holidays that land on a class day; all three are Tuesdays) and four `milestone` entries. These dates come from `calesc2026.pdf`; verify against it before changing one. **Add the next `session-NN` when you author the unit it teaches, not before.** Keep the numbering and the Tue/Thu 19:00–20:30 slot (`session-10` is the one documented exception); an empty future is the intended state, not a gap to fill with placeholders.
+**The session list is incremental on purpose.** The calendar used to carry all 32 sessions pre-titled through December; the plan drifted far enough from that outline that the future entries were removed. Only sessions whose content actually exists are listed — currently `session-01` through `session-13`, ending at 2026-10-01 — plus three `cancellation` entries (Tue 2026-09-15, Tue 2026-11-03, Tue 2026-11-17 — the only three holidays that land on a class day; all three are Tuesdays) and four `milestone` entries. These dates come from `calesc2026.pdf`; verify against it before changing one. **Add the next `session-NN` when you author the unit it teaches, not before.** Keep the numbering and the Tue/Thu 19:00–20:30 slot (`session-10` and `session-13` are the two documented exceptions); an empty future is the intended state, not a gap to fill with placeholders.
 
 **Do not hand-write assignment dates as calendar events.** Every official object with `content.due` or `content.available` contributes its own occurrence automatically. Write the `assignment` once; the calendar derives it.
 
-Every listed session carries a `page` reference: `el-curso`, `pipeline-de-datos`, `arquitectura-de-computadoras`, `software-libre-y-sistemas-operativos`, `terminal-directa`, `bash-scripting`, `expresiones-regulares`, `seccion-git`, `seccion-github`, `la-idea-del-contenedor`, `contenedores-con-las-manos` and `disenar-con-contenedores`. A `page` that does not resolve to a rendered stable ID fails validation, so leave it off until the target page exists.
+Every listed session carries a `page` reference: `el-curso`, `pipeline-de-datos`, `arquitectura-de-computadoras`, `software-libre-y-sistemas-operativos`, `terminal-directa`, `bash-scripting`, `expresiones-regulares`, `seccion-git`, `seccion-github`, `la-idea-del-contenedor`, `contenedores-con-las-manos`, `disenar-con-contenedores` and `ambientes-python`. A `page` that does not resolve to a rendered stable ID fails validation, so leave it off until the target page exists.
 
 ## Images
 
-Two generators, both in `tools/`, both with the generator as the source of truth:
+Diagrams come from one deterministic generator **per unit** in `tools/` (`gen_diagramas.py` for pipeline, `gen_regex.py`, `gen_git.py`, `gen_contenedores.py`, `gen_contenedores_bench.py`, `gen_python.py`, `gen_ai_*` for the architecture unit's dashboards). Each one owns a `DIAGRAMAS` catalog that it shares with its `test_gen_*.py` as the single list of figures that exist. The palette lives once in `tools/svg_base.py`, mirrored from `skins/fdd-eva.yaml`. Import it from there and never repeat it. Illustrations are the one non-deterministic generator:
 
 ```bash
-python3 tools/gen_diagramas.py                                  # los 8 SVG conceptuales
+python3 tools/gen_diagramas.py                                  # o gen_regex.py, gen_git.py, ...
 set -a && . ./.env && set +a                                    # carga OPENAI_API_KEY
 python3 tools/gen_ilustraciones.py portada viaje etl-elt        # ilustraciones gpt-image-2
 python3 -m pytest tools/ -q                                     # las guardas
+python3 -m pytest tools/test_gen_git.py::test_name -q           # una sola
 ```
+
+A few tests (`test_diagramas.py`, `test_ai_dashboard_*`) build the course with Raya and **skip** unless they find it. They look for `raya_lucaria/.worktrees/navigation-first-course-rail` among the repo's ancestors, or for `RAYA_CHECKOUT`. A green local run without that checkout has not exercised them (see `tools/raya_test_support.py`).
 
 Consequences worth internalizing:
 
-- **Editing a generated SVG by hand fails `test_diagramas.py`.** Change the entry in `DIAGRAMAS` and rerun the generator.
+- **Editing a generated SVG by hand fails its generator's test.** Change the entry in that generator's `DIAGRAMAS` and rerun it.
 - **Every image needs a row in `_assets/CREDITOS.md`** or `test_creditos.py` fails; crediting a file that does not exist fails too.
 - **Illustrations are non-deterministic** and are never regenerated in CI. Generate once, review by eye, commit.
 - Illustration prompts must never request real people or protected characters — `test_ilustraciones.py` enforces this.
@@ -116,13 +119,15 @@ Two details of the grace periods: both dates are compared against the PR's **ope
 - **Creating a task:** use the `crear_tarea` skill (ficha + official YAML + template in `codigo/` + `TAREAS` entry + board row + tests + adversarial pass).
 - **Reviewing deliveries:** use the `revisar_tarea` skill (it replaced `review_class_pr`): all-or-nothing verdict with teacher override, comparison between deliveries (`compara.py`), slop/incoherence signals stated as verifiable facts — never "copied" or "used AI".
 - **The review registry** lives on the orphan branch `registro-entregas` (`registro.csv`, one row per delivery attempt, **GitHub login only**, never real names). It is kept out of `main` on purpose because the repo is public; never merge that branch. Write to it with `.claude/skills/revisar_tarea/registro.py`.
-- The board `course/8_contenedores/7_D_entregas.md` also describes what the automatic review checks, so it moves together with the scripts and the two pages above.
+- The boards `course/8_contenedores/7_D_entregas.md` and `course/9_python/1_ambientes/12_B_entregas.md` also describe what the automatic review checks, so they move together with the scripts, the fichas and the two pages above.
 
 Deployment requires the repository to stay **public**: GitHub Pages is not available for private repos on this organization's plan.
 
 ## Content conventions
 
+- **Students work only inside their own folder.** Every lab, exercise and task is done in `estudiantes/<login>/`, copied from `codigo/` with the mirror rule, after opening their fork in VS Code and updating `main` — never in a folder outside the repo (`~/lab-*`, `~/fdd/docker-lab`). That keeps their work versioned, in one place, and reviewable. Creating the folder is the student's job; pages give the commands. Labs travel in the PR of the task that shares their top-level folder (e.g. `09_python/ambientes/` goes with `tarea-09-uv-docker`). Generated environments (`.venv/`) stay out of git through `.gitignore` and the `BASURA` list. Unit 8 predates this rule and still uses `~/fdd/docker-lab`. `tools/test_python_curriculum.py` enforces it for unit 9.
 - Course language is Spanish; identifiers in English.
+- Commits follow the history's Conventional Commit shape scoped by unit or area: `feat(unidad-3): ...`, `fix(entregas): ...`, `docs(skills): ...`. `AGENTS.md` carries a shorter version of these rules for other agents, so keep the two consistent.
 - Prose is dense and argumentative — introduce a concept as the answer to a concrete failure, not as a standalone definition. Read `course/2_pipeline_de_datos/4_cuando_se_rompe.md` for the register.
 - Don't reuse third-party captures. Diagrams are regenerated as own-work SVG.
 - Cite dated claims with their year. The "60 % of time cleaning data" figure is a ~2016 CrowdFlower survey and is labeled as recycled industry folklore, not fresh fact.

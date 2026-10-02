@@ -255,7 +255,7 @@ def test_las_secciones_existen_en_la_plantilla_y_la_url_concuerda(ruta):
 
 
 PALABRAS_DE_RECETA = ("git ", "docker ", "podman ", "cp ", "mkdir", "`",
-                      "sudo", "chmod", "pip ", "cambia la linea", "escribe ")
+                      "sudo", "chmod", "pip ", "uv ", "cambia la linea", "escribe ")
 
 
 @pytest.mark.parametrize("ruta", FICHAS, ids=lambda p: p.stem)
@@ -1045,3 +1045,259 @@ def test_la_ficha_no_es_mas_estricta_que_el_catalogo(caso):
 def test_lo_que_el_catalogo_exigia_de_verdad_sigue_fallando(caso):
     assert _viejo_falla(*caso)
     assert _nuevo_falla(*caso)
+
+
+# --------------------------------------------------------------------------
+# tarea-09-datacamp-python
+# --------------------------------------------------------------------------
+
+PLANTILLA_PY = (RAIZ / "codigo/python/certificaciones.md").read_text(encoding="utf-8")
+URL_SOA = "https://www.datacamp.com/completed/statement-of-accomplishment/course/abc123"
+CAP_PY = "estudiantes/ana/python/introduccion-python-developers.png"
+CERT_PY = "estudiantes/ana/python/certificaciones.md"
+
+
+def _py(fecha="2026-10-01", url=URL_SOA,
+        aprendi="Que un dict conserva el orden en que insertas las llaves."):
+    """La plantilla llena como la llenaria un alumno. La fecha por omision es
+    la de apertura: nunca es futura, corra el test el dia que corra."""
+    t = PLANTILLA_PY
+    t = t.replace("- Usuario de GitHub:", "- Usuario de GitHub: ana")
+    t = t.replace("- Usuario de DataCamp:", "- Usuario de DataCamp: ana-dc")
+    t = t.replace("Fecha en que lo terminaste (AAAA-MM-DD):",
+                  f"Fecha en que lo terminaste (AAAA-MM-DD): {fecha}")
+    t = t.replace("URL del Statement of Accomplishment:",
+                  f"URL del Statement of Accomplishment: {url}")
+    marca = "## Una cosa que aprendiste y no sabías\n"
+    assert marca in t
+    return t.replace(marca, marca + "\n" + aprendi + "\n") if aprendi else t
+
+
+def test_py_bien_entregada_pasa(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {
+        CERT_PY: _py(), CAP_PY: PNG}) == 0, capsys.readouterr().out
+
+
+def test_py_plantilla_sin_tocar_falla(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {
+        CERT_PY: PLANTILLA_PY, CAP_PY: PNG}) == 1
+
+
+def test_py_fecha_que_no_es_iso_falla(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {
+        CERT_PY: _py(fecha="1 de octubre de 2026"), CAP_PY: PNG}) == 1
+
+
+def test_py_sin_url_falla(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {
+        CERT_PY: _py(url=""), CAP_PY: PNG}) == 1
+
+
+def test_py_sin_captura_falla(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {CERT_PY: _py()}) == 1
+
+
+def test_py_sin_aprendiste_falla(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {
+        CERT_PY: _py(aprendi=""), CAP_PY: PNG}) == 1
+
+
+def test_py_fecha_que_no_existe_falla(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {
+        CERT_PY: _py(fecha="2026-13-45"), CAP_PY: PNG}) == 1
+
+
+def test_py_url_que_menciona_datacamp_sin_serlo_solo_avisa(monkeypatch, capsys):
+    url = "http://aaaaaaaaaa.com/x (datacamp.com/completed)"
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {
+        CERT_PY: _py(url=url), CAP_PY: PNG}) == 0
+    assert "AVISO" in capsys.readouterr().out
+
+
+def test_py_url_que_no_es_de_datacamp_solo_avisa(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {
+        CERT_PY: _py(url="https://example.com/mi-certificado"), CAP_PY: PNG}) == 0
+    assert "AVISO" in capsys.readouterr().out
+
+
+def test_py_en_la_carpeta_de_la_otra_entrega_falla(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-datacamp-python", {
+        "estudiantes/ana/09_python/certificaciones.md": _py(),
+        "estudiantes/ana/09_python/introduccion-python-developers.png": PNG}) == 1
+
+
+# --------------------------------------------------------------------------
+# tarea-09-uv-docker
+# --------------------------------------------------------------------------
+
+UVD = RAIZ / "codigo/09_python/uv_docker"
+B = "estudiantes/ana/09_python/uv_docker/"
+DF_PLANTILLA = (UVD / "Dockerfile").read_text(encoding="utf-8")
+
+
+def _df(h1="COPY pyproject.toml uv.lock ./", h2="RUN uv sync --locked",
+        h3="COPY reporte.py ./", quita_comentarios=False):
+    """El Dockerfile llenado al pie de la letra: cada instruccion debajo de su
+    comentario HUECO, que se queda (nadie pidio borrarlo)."""
+    t = DF_PLANTILLA
+    for n, inst in ((1, h1), (2, h2), (3, h3)):
+        linea = next(l for l in t.splitlines() if l.startswith(f"# HUECO {n}:"))
+        t = t.replace(linea, inst if quita_comentarios else f"{linea}\n{inst}")
+    return t
+
+
+DF_BIEN = _df()
+DI_PLANTILLA = (UVD / ".dockerignore").read_text(encoding="utf-8")
+PY_PLANTILLA = (UVD / "reporte.py").read_text(encoding="utf-8")
+PY_BIEN = PY_PLANTILLA.replace(
+    "from rich.console import Console",
+    "import humanize\nfrom rich.console import Console").replace(
+    'return ("<tu fila>", "<tu valor>")',
+    'return ("Tamaño del ambiente", humanize.naturalsize(tamano(sys.prefix)))')
+TOML_PLANTILLA = (UVD / "pyproject.toml").read_text(encoding="utf-8")
+TOML_BIEN = TOML_PLANTILLA.replace(
+    '    "rich>=15",', '    "humanize>=4.16.0",\n    "rich>=15",')
+# Extracto del uv.lock que uv 0.12.21 genero para la solucion probada.
+LOCK_BIEN = (
+    'version = 1\nrevision = 3\nrequires-python = ">=3.13"\n\n'
+    '[[package]]\nname = "humanize"\nversion = "4.16.0"\n'
+    'source = { registry = "https://pypi.org/simple" }\n'
+    'sdist = { url = "https://files.pythonhosted.org/packages/0a/ea/13a1/'
+    'humanize-4.16.0.tar.gz", hash = "sha256:7dc2244a2f84a4bfb1d36c37bac80cd7'
+    '8e35cdc5c119206d87b018e1445f3a3f", size = 89515 }\n\n'
+    '[[package]]\nname = "reporte"\nversion = "0.1.0"\n'
+    'source = { virtual = "." }\n\n'
+    '[[package]]\nname = "rich"\nversion = "15.0.0"\n'
+    'source = { registry = "https://pypi.org/simple" }\n'
+)
+BIT_PLANTILLA = (UVD / "bitacora.md").read_text(encoding="utf-8")
+DIGEST = "sha256:4befa05d7103368f2a00459a157a31a7c1344fc7eb7bc787672004875bad10e6"
+
+
+def _bitacora(url="https://hub.docker.com/r/ana/reporte", pull=True,
+              login=False, prefix="/app/.venv", digest=DIGEST):
+    """La bitacora llena con salidas como las de la solucion probada."""
+    t = BIT_PLANTILLA
+    t = t.replace("- Usuario de GitHub:", "- Usuario de GitHub: ana")
+    t = t.replace("- Usuario de Docker Hub:", "- Usuario de Docker Hub: ana")
+    t = t.replace("Paquete:", "Paquete: humanize")
+    t = t.replace("Para qué lo usa tu fila:",
+                  "Para qué lo usa tu fila: muestra cuánto pesa el ambiente")
+    t = t.replace("<!-- salida local -->",
+                  "│ sys.prefix          │ /home/ana/x/.venv │\n│ rich           │ 15.0.0  │")
+    t = t.replace("<!-- salida contenedor -->",
+                  f"│ sys.prefix          │ {prefix} │\n│ rich           │ 15.0.0  │")
+    t = t.replace("<!-- que cambio -->",
+                  "Las versiones de los paquetes son iguales por el lock.\n"
+                  "Cambian el intérprete y sys.prefix: /app/.venv en la imagen.")
+    t = t.replace("URL pública:", f"URL pública: {url}")
+    t = t.replace("Digest:", f"Digest: {digest}")
+    t = t.replace("Comando para correrla:",
+                  "Comando para correrla: docker run --rm ana/reporte")
+    prueba = ("Removing login credentials for https://index.docker.io/v1/\n"
+              "Untagged: ana/reporte:latest\n"
+              "Unable to find image 'ana/reporte:latest' locally\n"
+              "latest: Pulling from ana/reporte\n") if pull else "Untagged: ana/reporte:latest\n"
+    if login:
+        prueba = "Login Succeeded\n" + prueba
+    return t.replace("<!-- prueba de pull -->", prueba)
+
+
+def _uvd(**cambios):
+    archivos = {"Dockerfile": DF_BIEN, ".dockerignore": DI_PLANTILLA + ".venv\n",
+                "reporte.py": PY_BIEN, "pyproject.toml": TOML_BIEN,
+                "uv.lock": LOCK_BIEN, "bitacora.md": _bitacora()}
+    archivos.update(cambios)
+    return {B + k: v for k, v in archivos.items() if v is not None}
+
+
+def test_uvd_bien_entregada_pasa(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-uv-docker", _uvd()) == 0, capsys.readouterr().out
+    assert "AVISO" not in capsys.readouterr().out
+
+
+def test_uvd_borrar_los_comentarios_hueco_tambien_pasa(monkeypatch, capsys):
+    df = _df(quita_comentarios=True)
+    assert _main(monkeypatch, "tarea-09-uv-docker", _uvd(Dockerfile=df)) == 0
+
+
+@pytest.mark.parametrize("cambio", [
+    {"Dockerfile": DF_PLANTILLA},
+    {"Dockerfile": _df(h1="# COPY pyproject.toml uv.lock ./",
+                       h2="# RUN uv sync --locked", h3="# COPY reporte.py ./")},
+    {"Dockerfile": DF_BIEN.replace("FROM python:3.13-slim", "# sin base")},
+    {"Dockerfile": _df(h2="RUN uv sync")},
+    {"Dockerfile": _df(h2="RUN uv sync --frozen")},
+    {".dockerignore": DI_PLANTILLA + "# nada\n"},
+    {".dockerignore": DI_PLANTILLA + "# aqui iria .venv\n"},
+    {"reporte.py": PY_PLANTILLA + "\n# toque\n"},
+    {"reporte.py": PY_PLANTILLA.replace('return ("<tu fila>", "<tu valor>")',
+                                        'return ("a", "b")')},
+    {"pyproject.toml": TOML_PLANTILLA + "\n"},
+    {"pyproject.toml": TOML_PLANTILLA.replace('"rich>=15",', '"rich>=15",\n    "rich",')},
+    {"uv.lock": None},
+    {"uv.lock": "version = 1\n"},
+    {"uv.lock": 'name = "rich"\n'},
+    {"bitacora.md": _bitacora(url="https://hub.docker.com/repository/docker/ana/reporte")},
+    {"bitacora.md": _bitacora(url="hub.docker.com/r/ana/reporte")},
+    {"bitacora.md": _bitacora(pull=False)},
+    {"bitacora.md": _bitacora(login=True)},
+    {"bitacora.md": _bitacora(digest="")},
+    {"bitacora.md": BIT_PLANTILLA},
+], ids=["huecos", "huecos-comentados", "sin-from", "sin-locked", "frozen",
+        "sin-venv", "venv-en-comentario", "fila", "fila-sin-paquete", "una-dep",
+        "rich-dos-veces", "sin-lock", "lock-sin-rich", "lock-inventado",
+        "url-privada", "url-sin-https", "sin-pull", "login", "sin-digest",
+        "bitacora-vacia"])
+def test_uvd_cada_falla_se_atrapa(monkeypatch, capsys, cambio):
+    assert _main(monkeypatch, "tarea-09-uv-docker", _uvd(**cambio)) == 1
+
+
+def test_uvd_copiar_todo_el_proyecto_solo_avisa(monkeypatch, capsys):
+    df = _df(h3="COPY . .")
+    assert _main(monkeypatch, "tarea-09-uv-docker", _uvd(Dockerfile=df)) == 0
+    assert "AVISO" in capsys.readouterr().out
+
+
+def test_uvd_salida_del_contenedor_sin_su_venv_solo_avisa(monkeypatch, capsys):
+    assert _main(monkeypatch, "tarea-09-uv-docker",
+                 _uvd(**{"bitacora.md": _bitacora(prefix="/usr/local")})) == 0
+    assert "AVISO" in capsys.readouterr().out
+
+
+def test_fecha_iso_que_no_existe_no_cuenta():
+    assert rf.tiene_fecha_iso("Fecha: 2026-10-01")
+    assert not rf.tiene_fecha_iso("Fecha: 2026-13-45")
+
+
+# Hallazgos de la revision final: Dockerfiles correctos que no deben fallar,
+# y huecos vacios que no deben pasar.
+
+DF_DOCS_CACHE = _df(h2="RUN --mount=type=cache,target=/root/.cache/uv \\\n    uv sync --locked")
+DF_EXEC = _df(h2='RUN ["uv", "sync", "--locked"]')
+DF_BIND = _df(
+    h1="# los archivos del ambiente entran por bind mount",
+    h2=("RUN --mount=type=bind,source=uv.lock,target=uv.lock \\\n"
+        "    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \\\n"
+        "    uv sync --locked"))
+
+
+@pytest.mark.parametrize("df", [DF_DOCS_CACHE, DF_EXEC, DF_BIND],
+                         ids=["cache-multilinea", "exec", "bind-mount"])
+def test_uvd_dockerfile_al_estilo_de_la_guia_de_uv_pasa(monkeypatch, capsys, df):
+    assert _main(monkeypatch, "tarea-09-uv-docker", _uvd(Dockerfile=df)) == 0, \
+        capsys.readouterr().out
+
+
+@pytest.mark.parametrize("linea", [".venv", "/.venv/", "**/.venv", ".venv/"])
+def test_uvd_dockerignore_valido_pasa(monkeypatch, capsys, linea):
+    di = DI_PLANTILLA + linea + "\n"
+    assert _main(monkeypatch, "tarea-09-uv-docker", _uvd(**{".dockerignore": di})) == 0
+
+
+@pytest.mark.parametrize("df", [
+    _df(h1="COPY pyproject.toml uv.lock .", h3=""),
+    _df(h2="RUN uv sync  # --locked"),
+], ids=["hueco3-vacio-con-punto", "locked-en-comentario"])
+def test_uvd_huecos_falsos_fallan(monkeypatch, capsys, df):
+    assert _main(monkeypatch, "tarea-09-uv-docker", _uvd(Dockerfile=df)) == 1

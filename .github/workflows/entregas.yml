@@ -52,7 +52,9 @@ jobs:
             tarea-08-datacamp-intro=docker,
             tarea-08-imagen=08_contenedores,
             tarea-08-datacamp-inter-1=docker,
-            tarea-08-datacamp-inter-2=docker
+            tarea-08-datacamp-inter-2=docker,
+            tarea-09-datacamp-python=python,
+            tarea-09-uv-docker=09_python
           # La regla de la branch (no entregar desde main) solo AVISA hasta
           # esta fecha, y a partir de ella rechaza. Existe porque el grupo ya
           # tenia pull requests abiertos desde main cuando la regla entro.

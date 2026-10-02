@@ -112,6 +112,14 @@ events:
     title: "Contenedores: diseño, servicios y dónde se rompe el aislamiento"
     page: disenar-con-contenedores
 
+  - id: session-13
+    kind: session
+    date: "2026-10-01"
+    start_time: "19:00"
+    end_time: "20:00"
+    title: "Python: ambientes con uv, y qué hay dentro de un .venv"
+    page: ambientes-python
+
   - id: asueto-noviembre
     kind: cancellation
     date: "2026-11-03"

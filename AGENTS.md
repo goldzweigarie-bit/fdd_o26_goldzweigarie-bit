@@ -25,7 +25,7 @@ Use `validate` for fast feedback; `build` also validates; `preview` serves the g
 
 ## Coding Style & Naming Conventions
 
-Write student-facing prose, titles, and instructions in Spanish. Keep technical IDs, object types, filenames, tags, and skin tokens in English. Numeric prefixes define order only; durable links use stable IDs such as `[[memoria-y-datos]]`. Use four spaces in Python and two spaces for nested YAML. Quote YAML values containing colons. Raw HTML is disabled, so use CommonMark and Raya directives.
+Students work only inside `estudiantes/<login>/`, copied from `codigo/` with the mirror rule; never point a lab or task at a folder outside the repo. Labs travel in the PR of the task that shares their top-level folder; `.venv/` stays out through `.gitignore`. Write student-facing prose, titles, and instructions in Spanish. Keep technical IDs, object types, filenames, tags, and skin tokens in English. Numeric prefixes define order only; durable links use stable IDs such as `[[memoria-y-datos]]`. Use four spaces in Python and two spaces for nested YAML. Quote YAML values containing colons. Raw HTML is disabled, so use CommonMark and Raya directives.
 
 ## Testing Guidelines
 

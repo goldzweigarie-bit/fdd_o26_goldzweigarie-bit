@@ -19,7 +19,7 @@ el temario, cómo se califica y las dos primeras tareas.
 
 Las sesiones son los **martes y jueves, de 19:00 a 20:30**.
 
-Hay una sola excepción en todo el semestre: el **jueves 17 de septiembre** la sesión dura una hora, de **19:00 a 20:00**. Es la clase que abre la unidad de contenedores, se da sin computadora y no necesita más.
+Hay dos excepciones en todo el semestre, las dos de una hora, de **19:00 a 20:00**: el **jueves 17 de septiembre**, la clase que abre la unidad de contenedores, que se da sin computadora; y el **jueves 1 de octubre**, la clase de ambientes de Python.
 
 ## El repositorio del curso
 

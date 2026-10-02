@@ -41,3 +41,5 @@ Todo esto está explicado en la unidad: https://rayalucaria.org/fdd_o26/git-y-gi
 | `github/` | 07 — GitHub | Certificaciones de Git y GitHub, de acumulación por entrega. |
 | `08_contenedores/` | 08 — Contenedores | Laboratorios e imagen propia de la unidad. Ojo: el nombre lleva el cero adelante. |
 | `docker/` | 08 — Contenedores | Certificaciones de Docker, de acumulación por entrega. |
+| `09_python/` | 09 — Python | `ambientes/` (labs de clase, se copian fuera del repo) y `uv_docker/` (entrega). Ojo: el nombre lleva el cero adelante. |
+| `python/` | 09 — Python | Certificaciones de Python, de acumulación por entrega. |
